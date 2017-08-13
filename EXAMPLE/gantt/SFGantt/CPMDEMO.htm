@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="utf-8"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	var icount=0;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("data.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+
+
+		
+		adapter=new SFDataProject(doc);
+		//adapter.addTaskProperty("utlineNumber","outlineNumber",SFDataRender.types.String);
+		adapter.addTaskProperty("EarlyStart1","EarlyStart1",SFDataRender.types.Time);
+		adapter.addTaskProperty("EarlyFinish","EarlyFinish",SFDataRender.types.Time);
+		adapter.addTaskProperty("LateStart","LateStart",SFDataRender.types.Time);
+		adapter.addTaskProperty("LateFinish","LateFinish",SFDataRender.types.Time);
+		adapter.addTaskProperty("Duration1","Duration1",SFDataRender.types.Float);
+		gtData=new SFData(adapter);	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,4);		//显示甘特图
+	}
+
+	function CriticalPath(){
+	
+		//alert(gtData.getTasksCount() );
+		var i,iFirstCount=0,iLastCount=0;
+		var clsTask,startTask,endTask;
+		var iTaskCount=gtData.getTasksCount();
+		gtData.getTaskById(iTaskCount);
+
+
+		for(i=1;i<=iTaskCount;i++)
+		{
+			clsTask=gtData.getTaskById(i);
+	clsTask.setProperty("Duration1",dateStartEnd("d",clsTask.getProperty("Start"),clsTask.getProperty("Finish")) );	
+
+		}
+		startTask=gtData.getTaskById(3);
+		
+
+		startTask.setProperty("EarlyStart1",startTask.getProperty("Start"));
+
+		
+alert("dddddd  "+startTask.getProperty("Name")+"   "+startTask.getProperty("Duration1")+ " "+startTask.getProperty("Start") + " "+startTask.getProperty("Finish"));
+	
+var tmpdate=new Date();
+tmpdate=DateAdd("d",startTask.getProperty("Duration1"),startTask.getProperty("EarlyStart1"));
+
+
+
+alert("dddddd  "+startTask.getProperty("Name")+"   "+startTask.getProperty("Duration1")+ " "+startTask.getProperty("Start") + " "+startTask.getProperty("Finish"));
+	
+	
+
+	}
+
+	
+
+
+function DateAdd(interval,number,date){
+var dt=new Date(date.valueOf());
+return new Date(dt.setDate(dt.getDate()+number));
+}
+
+
+
+
+
+function dateStartEnd (strInterval, dtStart,dtEnd) {    
+    if (typeof dtStart == 'string' )//如果是字符串转换为日期型 
+     {   
+          dtStart = StringToDate(dtStart); 
+     }
+     if (typeof dtEnd == 'string' )//如果是字符串转换为日期型 
+     {   
+          dtEnd = StringToDate(dtEnd); 
+     }
+      switch (strInterval) {   
+         case 's' :return parseInt((dtEnd - dtStart) / 1000); 
+         case 'n' :return parseInt((dtEnd - dtStart) / 60000); 
+         case 'h' :return parseInt((dtEnd - dtStart) / 3600000); 
+         case 'd' :return parseInt((dtEnd - dtStart) / 86400000); 
+         case 'w' :return parseInt((dtEnd - dtStart) / (86400000 * 7)); 
+         case 'm' :return (dtEnd.getMonth()+1)+((dtEnd.getFullYear()-dtStart.getFullYear())*12) - (dtStart.getMonth()+1); 
+         case 'y' :return dtEnd.getFullYear() - dtStart.getFullYear();
+         case 'd-h' :return parseFloat((dtEnd - dtStart) / 86400000).toFixed(2);
+      } 
+} 
+
+
+
+
+</script>
+</head>
+<body onload="onLoad()">
+<div id="content">
+	<h3>范例:基本的Gantt调用</h3>
+	<Input Type="Button" Value="计算关键路径" onClick="CriticalPath()">
+		<Input Type="Button" Value="测试" onClick="test()">
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:基本的Gantt调用</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>关键路径法(Critical Path Method,CPM) </p>
+<p>
+　　关键路径算法是一种网络图方法，由雷明顿-兰德公司(Remington- Rand)的JE克里(JE Kelly)和杜邦公司的MR沃尔克(MR Walker)在1957年提出的，用于对化工工厂的维护项目进行日程安排。它适用于有很多作业而且必须按时完成的项目。关键路线法是一个动态系统，它会随着项目的进展不断更新，该方法采用单一时间估计法，其中时间被视为一定的或确定的。  </p>
+关键路径算法  
+<ul>
+　　<li>1）画出网络图，以节点标明事件，由箭头代表作业。这样可以对整个项目有一个整体概观。习惯上项目开始于左方终止于右方。  </li>
+　<li>2）在箭头上标出每项作业的持续时间（T） </li>
+　　<li>3）从左面开始，计算每项作业的最早结束时间（EF）。该时间等于最早可能的开始时间（ES）加上该作业的持续时间。  </li>
+　<li>4）当所有的计算都完成时，最后算出的时间就是完成整个项目所需要的时间。 </li>
+　　<li>5）从右边开始，根据整个项目的持续时间决定每项作业的最迟结束时间（LF）。</li>  
+　<li>6）最迟结束时间减去作业的持续时间得到最迟开始时间（LS）。</li>
+　<li>7）每项作业的最迟结束时间与最早结束时间，或者最迟开始时间与最早开始时间的差额就是该作业的时差。</li>  　<li>8）如果某作业的时差为零，那么该作业就在关键路线上。 </li>
+　　<li>9）项目的关联路线就是所有作业的时差为零的路线。</li>
+</ul>		鼠标放在甘特图右下角的斜三角上，鼠标形状会变成对角斜线状态，这个时候可以拖动鼠标改变整个甘特图的大小；</p>
+		<p><a href="http://www.51diaodu.cn">访问<b>我要调度网</b>查看更多关于<b>向日葵甘特</b>的信息</a></p>
+	</div>
+</div>
+</body>
+</html>

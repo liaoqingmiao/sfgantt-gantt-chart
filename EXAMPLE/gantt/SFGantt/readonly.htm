@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>显示只读的甘特图-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("RESCONST2.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		gtConfig.setConfig("SFGantt/readOnly",true);	//设置甘特图为只读
+		gtData=new SFData(new SFDataProject(doc));	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,4);		//显示甘特图
+	}
+</script>
+</head>
+<body onload="onLoad()">
+<script language="javascript" src="/site/top.js" charset="utf-8"></script>
+<div id="content">
+	<h3>范例:显示只读的甘特图</h3>
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:显示只读的甘特图</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>默认情况下显示的甘特图可以有很多修改操作，而很多时候我们仅仅需要实现甘特图的浏览功能，本范例即演示如何实现只读形式的甘特图。</p>
+		<p>在这种情况下，用户对甘特图的操作完全不会引起甘特图数据的变化，相关的拖动等功能也被禁止，例如以下功能被禁止：
+		<ul>
+			<li>点击左侧列表之中的单元格进入输入框模式</li>
+			<li>右键菜单之新建任务</li>
+			<li>右键菜单之删除任务</li>
+			<li>右键菜单之链接任务</li>
+			<li>右键菜单之取消链接</li>
+			<li>右键菜单之升级</li>
+			<li>右键菜单之降级</li>
+			<li>拖动任务条改变任务的起始时间</li>
+			<li>拖动一个任务条到另一个任务条以建立链接</li>
+			<li>拖动任务条的末尾更改任务的结束时间</li>
+			<li>拖动百分比条的末尾更改任务的完成百分比</li>
+		</ul>
+		</p>
+		<p>甘特图也可以禁用其中的某单个功能，也可以从数据的角度来禁止某一类功能(例如禁止所有添加任务的功能)，具体的请参看甘特图的配置文档！</p>
+		<p><a href="../">返回范例列表</a></p>
+	</div>
+</div>
+<script language="javascript" src="/site/bottom.js" charset="utf-8"></script>
+</body>
+</html>

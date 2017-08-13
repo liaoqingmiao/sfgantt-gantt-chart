@@ -1,0 +1,1 @@
+document.write('<script language="javascript" charset="gb2312" src="../../../BASE/gantt/gantt.js"></script>');

@@ -1,0 +1,73 @@
+﻿<SFGantt>
+  <Task>
+    <UID>0</UID>
+    <ID>0</ID>
+    <OutlineNumber>0</OutlineNumber>
+    <Summary>1</Summary>
+    <WbsShortCode></WbsShortCode>
+    <target_start_date></target_start_date>
+    <target_end_date></target_end_date>
+    <act_start_date></act_start_date>
+    <act_start_date></act_start_date>
+    <ObsName></ObsName>
+    <est_wt></est_wt>
+    <Tasks>
+      <Task>
+        <UID>a21d20e8-4184-4187-0e3e-12137CD733cd</UID>
+        <ID>6</ID>
+        <Name>汽车制造2</Name>
+        <Start>2009-5-19 8:01:00</Start>
+        <Finish>2009-5-19 8:01:00</Finish>
+        <Summary>0</Summary>
+        <PercentComplete>0.00</PercentComplete>
+        <WbsShortCode>0</WbsShortCode>
+        <target_start_date>2009-5-19 8:01:00</target_start_date>
+        <target_end_date>2009-5-19 8:01:00</target_end_date>
+        <act_start_date>2008-5-1 0:00:00</act_start_date>
+        <act_start_date>2008-5-1 0:00:00</act_start_date>
+        <ObsName></ObsName>
+        <est_wt>0.00</est_wt>
+        <Collapse>0</Collapse>
+        <Links />
+      </Task>
+      <Task >
+        <UID>14808ae2-8c8a-a991-ac10-12137CFE76a7</UID>
+        <ID>17</ID>
+        <Name>车架生产</Name>
+        <Start>2009-5-13 10:32:00</Start>
+        <Finish>2009-9-2 17:49:00</Finish>
+        <Summary>0</Summary>
+        <PercentComplete>31.00</PercentComplete>
+        <WbsShortCode>1.1</WbsShortCode>
+        <target_start_date>2009-5-13 10:32:00</target_start_date>
+        <target_end_date>2009-9-2 17:49:00</target_end_date>
+        <act_start_date>2008-5-1 0:00:00</act_start_date>
+        <act_start_date>2008-5-1 0:00:00</act_start_date>
+        <ObsName>文档编制</ObsName>
+        <est_wt>31.00</est_wt>
+        <Collapse>0</Collapse>
+        <Links>
+			<UID>1</UID><PredecessorLink><PredecessorUID>a21d20e8-4184-4187-0e3e-12137CD733cd</PredecessorUID><Type>1</Type><c>0</c></PredecessorLink>
+		</Links>
+      </Task>
+      <Task>
+        <UID>44339c73-94ac-5814-6b9a-1213DCB6490d</UID>
+        <ID>19</ID>
+        <Name>阿斯顿</Name>
+        <Start>2009-5-13 17:05:00</Start>
+        <Finish>2009-5-29 17:49:00</Finish>
+        <Summary>0</Summary>
+        <PercentComplete>0.00</PercentComplete>
+        <WbsShortCode>D2</WbsShortCode>
+        <target_start_date>2009-5-13 17:05:00</target_start_date>
+        <target_end_date>2009-5-29 17:49:00</target_end_date>
+        <act_start_date>2008-5-1 0:00:00</act_start_date>
+        <act_start_date>2008-5-1 0:00:00</act_start_date>
+        <ObsName></ObsName>
+        <est_wt>0.00</est_wt>
+        <Collapse>0</Collapse>
+
+      </Task>
+    </Tasks>
+  </Task>
+</SFGantt>

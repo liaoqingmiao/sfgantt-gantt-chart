@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>设置甘特图部分任务只读-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="http://www.51diaodu.cn/sfgantt/js/gantt.js.aspx" charset="utf-8"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("readonlytest.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		gtData=new SFData(new SFDataProject(doc));	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		//设置“名称”列只读
+		SFGanttField.getTaskField("Name").setReadOnly(true);	//设置Name列数据为只读
+		gtMap.showMap(null,4);		//显示甘特图
+	}
+</script>
+</head>
+<body onload="onLoad()">
+<script language="javascript" src="/site/top.js" charset="utf-8"></script>
+<div id="content">
+	<h3>范例:设置甘特图部分任务只读</h3>
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:设置甘特图部分任务只读</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>在一个项目的管理过程中，我们有时候需要按照用户权限设置任务的只读状态。可以设置用户对某些任务只具有查看权限，而对其它任务可以修改。</p>
+		<p>在这种情况下，我们需要用到任务节点的ReadOnly属性。ReadOnly节点值为1时，任务不允许进行任何修改和删除操作。如果摘要任务的ReadOnly节点值为“1”，则会同时禁止该任务的自动计算功能，即其子任务拖动后，不影响该摘要任务的开始时间和结束时间。范例中从第7行到第17行任务都设置成了“只读”状态，您可以试着拖动第18行任务，它不会影响第16行的摘要任务。</p>
+
+		<p>您也可以设置甘特表格中某一列只读，如范例中的“名称”列均不允许修改。</p>
+		
+		<p><a href="../">返回范例列表</a></p>
+	</div>
+</div>
+<script language="javascript" src="/site/bottom.js" charset="utf-8"></script>
+</body>
+</html>

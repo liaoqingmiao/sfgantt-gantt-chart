@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>通过脚本控制概要任务的折叠状态-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="utf-8"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("http://www.51diaodu.cn/sfgantt/data/test.xml.aspx",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+
+
+
+		gtData=new SFData(new SFDataProject(doc));	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		
+		gtData.getTaskByUid(1).setProperty("Collapse",true);//可以在甘特图显示之前设置某个概要任务是否展开
+		
+		gtMap.showMap(null,2);		//显示甘特图
+
+	}
+
+	function expand(bCollapse)
+	{
+		var task=gtMap.getFocusTask();
+		if(task){
+			task.setProperty("Collapse",bCollapse);//设置任务是否展开
+			task.update();
+		}
+		else
+			alert("请先选择一个概要任务!");
+	}
+
+</script>
+</head>
+<body onload="onLoad()">
+<script language="javascript" src="/site/top.js" charset="utf-8"></script>
+<div id="content">
+	<h3>范例:通过脚本控制概要任务的折叠状态</h3>
+	<Input Type=Button ID="Expand" value="展开" onClick="expand(false)">
+	<Input Type=Button ID="Collapse" value="收缩"   onClick="expand(true)">
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:通过脚本控制概要任务的折叠状态</h3>
+		<p>1、可以在xml中直接设置任务的Collapse节点值，0表示展开，1表示收拢。
+		<p>2、可以设置任务的Collapse属性,false表示展开,true表示收拢。</p>
+		<p>本范例中，需先选择一个概要任务,然后点击"展开"按钮可以展开任务，"收缩"按钮可以收拢任务。</p>
+
+		<p><a href="../">返回范例列表</a></p>
+	</div>
+</div>
+<script language="javascript" src="/site/bottom.js" charset="utf-8"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SFGantt>
+  <Task>
+    <UID>c84874cb478a4a618f67c4cb5d9664db</UID>
+    <ID>c84874cb478a4a618f67c4cb5d9664db</ID>
+    <Name>2011-03-08 08:00:00</Name>
+    <OutlineNumber>0</OutlineNumber>
+    <Summary>0</Summary>
+    <Tasks>
+      <Task>
+        <UID>C492D6C4D41000015F1A1ED51F6F18AE</UID>
+        <ID>null</ID>
+        <Name>综合楼</Name>
+        <Start>2011-03-09 16:54:29.0</Start>
+        <Finish>2011-03-25 16:54:31.0</Finish>
+        <BaselineStart>2011-03-09 16:54:29.0</BaselineStart>
+        <BaselineFinish>2011-03-25 16:54:31.0</BaselineFinish>
+        <Summary>0</Summary>
+        <PercentComplete>0</PercentComplete>
+        <WorkNo>R</WorkNo>
+        <GanttType>B</GanttType>
+        <TaskUuid>6a0e60512dcf40b09940ddc7f189ead5</TaskUuid>
+        <Va001Uuid>c84874cb478a4a618f67c4cb5d9664db</Va001Uuid>
+        <ProjectNo>KAC0001</ProjectNo>
+        <ConstCode>003</ConstCode>
+        <Collapse>0</Collapse>
+        <PredecessorLink>
+          <UID>C4957F73B3900001A38115CE1D301D76</UID>
+          <PredecessorUID>C493196096000001E46A10C9550018EA</PredecessorUID>
+          <Type>0</Type>
+        </PredecessorLink>
+      </Task>
+      <Task>
+        <UID>C493196096000001E46A10C9550018EA</UID>
+        <ID>null</ID>
+        <Name>研发楼工程测试</Name>
+        <Start>2010-12-09 10:17:19.0</Start>
+        <Finish>2010-12-24 10:18:43.0</Finish>
+        <BaselineStart>2011-02-23 18:26:49.0</BaselineStart>
+        <BaselineFinish>2011-02-26 18:26:51.0</BaselineFinish>
+        <Summary>0</Summary>
+        <PercentComplete>0</PercentComplete>
+        <WorkNo>R</WorkNo>
+        <GanttType>B</GanttType>
+        <TaskUuid>4111e2eecaee4953961f5f2ab2f432ed</TaskUuid>
+        <Va001Uuid>c84874cb478a4a618f67c4cb5d9664db</Va001Uuid>
+        <ProjectNo>KAB0001</ProjectNo>
+        <ConstCode>005</ConstCode>
+        <Collapse>0</Collapse>
+      </Task>
+      <Task>
+        <UID>C492D7319B600001CAE9115010001804</UID>
+        <ID>null</ID>
+        <Name>标准厂房</Name>
+        <Start>2010-12-08 14:58:28.0</Start>
+        <Finish>2010-12-10 10:29:08.0</Finish>
+        <BaselineStart>2011-02-23 18:26:49.0</BaselineStart>
+        <BaselineFinish>2011-02-26 18:26:51.0</BaselineFinish>
+        <ActualStart>2010-12-08</ActualStart>
+        <Summary>0</Summary>
+        <PercentComplete>0</PercentComplete>
+        <DUTIER>100546</DUTIER>
+        <WorkNo>R</WorkNo>
+        <GanttType>B</GanttType>
+        <TaskUuid>e9adb5f121d94b8980d50d3d64b9c4ad</TaskUuid>
+        <Va001Uuid>c84874cb478a4a618f67c4cb5d9664db</Va001Uuid>
+        <ProjectNo>EBA0001</ProjectNo>
+        <ConstCode>004</ConstCode>
+        <Collapse>0</Collapse>
+      </Task>
+      <Task>
+        <UID>C493269C6B40000131221760296B6CA0</UID>
+        <ID>null</ID>
+        <Name>联合站房</Name>
+        <Start>2010-12-07 14:08:30.0</Start>
+        <Finish>2011-01-20 14:34:36.0</Finish>
+        <BaselineStart>2011-02-23 18:26:49.0</BaselineStart>
+        <BaselineFinish>2011-02-26 18:26:51.0</BaselineFinish>
+        <ActualStart>2010-12-09</ActualStart>
+        <ReadOnly>1</ReadOnly>
+        <Summary>0</Summary>
+        <PercentComplete>20.4</PercentComplete>
+        <DUTIER>100546</DUTIER>
+        <WorkNo>R</WorkNo>
+        <GanttType>B</GanttType>
+        <TaskUuid>32ac511aa20146529f36244af6e0acf2</TaskUuid>
+        <Va001Uuid>c84874cb478a4a618f67c4cb5d9664db</Va001Uuid>
+        <ProjectNo>PGA0001</ProjectNo>
+        <ConstCode>006</ConstCode>
+        <Collapse>0</Collapse>
+      </Task>
+      <Task>
+        <UID>C49326A11630000169BD156011E32FA0</UID>
+        <ID>null</ID>
+        <Name>35kV站</Name>
+        <Start>2010-12-12 06:59:53.0</Start>
+        <Finish>2010-12-13 06:59:53.0</Finish>
+        <BaselineStart>2011-02-23 18:26:49.0</BaselineStart>
+        <BaselineFinish>2011-02-26 18:26:51.0</BaselineFinish>
+        <Summary>0</Summary>
+        <PercentComplete>0</PercentComplete>
+        <WorkNo>R</WorkNo>
+        <GanttType>B</GanttType>
+        <TaskUuid>adbe5c41a6e64b2fb2457426a4878058</TaskUuid>
+        <Va001Uuid>c84874cb478a4a618f67c4cb5d9664db</Va001Uuid>
+        <ProjectNo>PJE0001</ProjectNo>
+        <TaskIsSummary>0</TaskIsSummary>
+        <ConstCode>007</ConstCode>
+        <Collapse>0</Collapse>
+        <PredecessorLink>
+          <UID>C4957F9CD8C000016E911DE018761895</UID>
+          <PredecessorUID>C493269C6B40000131221760296B6CA0</PredecessorUID>
+          <Type>1</Type>
+        </PredecessorLink>
+      </Task>
+      <Task>
+        <UID>C4957DB63A9000016F101E4910D67FF0</UID>
+        <ID>null</ID>
+        <Name>临时房屋</Name>
+        <Start>2010-12-16 20:35:41.0</Start>
+        <Finish>2010-12-17 20:35:41.0</Finish>
+        <BaselineStart>2011-02-23 18:26:49.0</BaselineStart>
+        <BaselineFinish>2011-02-26 18:26:51.0</BaselineFinish>
+        <Summary>0</Summary>
+        <PercentComplete>0</PercentComplete>
+        <WorkNo>J</WorkNo>
+        <GanttType>B</GanttType>
+        <TaskUuid>d6c3abdcf5504e1da4f69bfc1a45cb70</TaskUuid>
+        <Va001Uuid>c84874cb478a4a618f67c4cb5d9664db</Va001Uuid>
+        <ProjectNo>PJ00001</ProjectNo>
+        <ConstCode>008</ConstCode>
+        <Collapse>0</Collapse>
+      </Task>
+      <Task>
+        <UID>C495851E2DD00001841CA45EA3481821</UID>
+        <ID>null</ID>
+        <Name>仓库区</Name>
+        <Start>2010-12-16 22:52:18.0</Start>
+        <Finish>2010-12-19 22:52:18.0</Finish>
+        <BaselineStart>2011-02-23 18:26:49.0</BaselineStart>
+        <BaselineFinish>2011-02-26 18:26:51.0</BaselineFinish>
+        <ReadOnly>1</ReadOnly>
+        <Summary>0</Summary>
+        <PercentComplete>0</PercentComplete>
+        <WorkNo>R</WorkNo>
+        <GanttType>B</GanttType>
+        <TaskUuid>4ef8bdc42aa4416ab747d7dcee8da010</TaskUuid>
+        <Va001Uuid>c84874cb478a4a618f67c4cb5d9664db</Va001Uuid>
+        <ProjectNo>N000001</ProjectNo>
+        <ConstCode>009</ConstCode>
+        <Collapse>0</Collapse>
+      </Task>
+      <Task>
+        <UID>C496A4D02470000197186ADCA8C31FFB</UID>
+        <ID>null</ID>
+        <Name>标准厂房</Name>
+        <Start>2010-12-19 03:12:57.0</Start>
+        <Finish>2010-12-22 03:12:57.0</Finish>
+        <BaselineStart>2011-02-23 18:26:49.0</BaselineStart>
+        <BaselineFinish>2011-02-26 18:26:51.0</BaselineFinish>
+        <Summary>0</Summary>
+        <PercentComplete>0</PercentComplete>
+        <WorkNo>S</WorkNo>
+        <GanttType>B</GanttType>
+        <TaskUuid>e9adb5f121d94b8980d50d3d64b9c4ad</TaskUuid>
+        <Va001Uuid>c84874cb478a4a618f67c4cb5d9664db</Va001Uuid>
+        <ProjectNo>EBA0001</ProjectNo>
+        <ConstCode>010</ConstCode>
+        <Collapse>0</Collapse>
+        <PredecessorLink>
+          <UID>C4AB9F4502C00001DE3C1D01FC1FBB60</UID>
+          <PredecessorUID>C495851E2DD00001841CA45EA3481821</PredecessorUID>
+          <Type>0</Type>
+        </PredecessorLink>
+      </Task>
+    </Tasks>
+  </Task>
+</SFGantt>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>添加和自定义甘特列表之中的列-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		gtConfig.setConfig("SFGantt/taskFieldNames","Name,CreateDate");	//设置在列表之中显示哪些列
+		var adapter=new SFDataProject();
+		adapter.addTaskProperty("CreateDate","CreateDate",SFDataRender.types.Time);
+		adapter.loadXml(doc);
+		gtData=new SFData(adapter);
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		//以下的函数用来定义一个种任务属性
+		//参数1 100表示这个列的默认显示宽度
+		//参数2 '创建时间'表示这个列的名称，将可能被显示到表格头上
+		//参数3 SFGanttListField.NormalHead指定列的列表头的显示方式，这个值为默认的表示方式
+		//参数4 SFGanttListField.DateBody表示列表内容的显示方式，是针对时间对象，只显示日期的显示方式
+		//参数5 SFGanttField.DateInput表示列表输入框的显示方式
+		//参数6 "CreateDate"表示列表输入框发生更改的时候，应修改任务的哪个属性
+		//参数7 "CreateDate"表示列表的内容受任务的哪些属性影响，当这些属性中的一个发生变更的时候，将会重绘该列
+		var field=new SFGanttField(100,'创建时间',SFGanttField.NormalHead,SFGanttField.DateBody,SFGanttField.DateInput,"CreateDate","CreateDate");
+		//以下语句将该任务域注册到任务域列表
+		SFGanttField.setTaskField("CreateDate",field);
+		gtMap.showMap(null,4);		//显示甘特图
+	}
+</script>
+</head>
+<body onload="onLoad()">
+<script language="javascript" src="/site/top.js" charset="utf-8"></script>
+<div id="content">
+	<h3>范例:添加和自定义甘特列表之中的列</h3>
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:添加和自定义甘特列表之中的列</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>默认情况下甘特图的左侧会显示"任务名称"，"开始时间","完成时间","工期"这四列，本范例演示如何自定义列并添加到列表。</p>
+		<p>在本例之中自定义了一个“创建时间”的域，然后添加了一个“创建时间”的列，并显示到列表之中；</p>
+		<p><a href="../">返回范例列表</a></p>
+	</div>
+</div>
+<script language="javascript" src="/site/bottom.js" charset="utf-8"></script>
+</body>
+</html>

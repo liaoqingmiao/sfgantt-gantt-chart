@@ -1,0 +1,28 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		gtData=new SFData(new SFDataProject(doc));	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,2);		//显示甘特图
+	}
+</script>
+</head>
+<body onload="onLoad()" style="padding:0px;margin:0px;">
+<div id="Div_Gantt" style="position:relative;width:100%;height:100%;border:solid 1px black"></div>
+</body>
+</html>

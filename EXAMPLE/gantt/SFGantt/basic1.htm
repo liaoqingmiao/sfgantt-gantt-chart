@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		gtConfig.setConfig("SFGanttElementList/disableDragOrder",true);	//设置甘特图编号列显示的字段，缺省为空,这里将其设置为ID
+		gtData=new SFData(new SFDataProject(doc));	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,5);		//显示甘特图
+	}
+	function GridTree_AddChild()
+	{
+		 var selectedTasks = gtMap.getSelectedTasks();
+		 if (selectedTasks.length==0)
+		 {
+			alert("请选择行！");
+		 }
+		 var tmpTask = gtData.addTask(selectedTasks[0],'');
+
+		 
+	} 
+</script>
+</head>
+<body onload="onLoad()">
+<div id="content">
+	<h3>范例:基本的Gantt调用</h3>
+	<Input Type="Button" Value="计算关键路径" onClick="GridTree_AddChild()">
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:基本的Gantt调用</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>您可以通过上面显示的甘特图进行浏览,该界面的操作方式与Project软件类似，通过；左侧的纵向滚动条，您可以浏览整个项目进程，而下方左侧的滚动条用来浏览每个项目的所有列表信息，而下方右侧的滚动条用来改变甘特图的时间轴。</p>
+		<p>在左侧列表之中点击右键，有一个简单的右键菜单，可以快速的执行一些与该任务对应的操作，还可以打开"任务信息"的窗口进行编辑操作；</p>
+		<p>在右侧列表之中点击右键，可以放大或缩小右边的甘特图；</p>
+		<p>鼠标放在甘特图的中间分割条上，鼠标形状会变成横向拖动状态，这个时候可以拖动鼠标，调整左侧列表区和右侧图表区的大小；</p>
+		<p>鼠标放在甘特图右下角的斜三角上，鼠标形状会变成对角斜线状态，这个时候可以拖动鼠标改变整个甘特图的大小；</p>
+		<p><a href="http://www.51diaodu.cn">访问<b>我要调度网</b>查看更多关于<b>向日葵甘特</b>的信息</a></p>
+	</div>
+</div>
+</body>
+</html>

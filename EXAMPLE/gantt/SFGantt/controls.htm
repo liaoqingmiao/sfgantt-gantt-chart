@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtData,gtMap,gtConfig=new SFConfig();
+	gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+	var gtControls=[
+		{
+			name:"SFGanttTooltipControl",
+			desc:"显示Tooltips",
+			configName:"disableTooltip"
+		},
+		{
+			name:"SFGanttContextMenuControl",
+			desc:"使用右键菜单",
+			configName:"disableContextMenu"
+		},
+		{
+			name:"SFGanttCursorControl",
+			desc:"使用鼠标样式",
+			configName:"disableCursor"
+		},
+		{
+			name:"SFGanttScrollControl",
+			desc:"使用右侧滚动条",
+			configName:"disableScroll"
+		},
+		{
+			name:"SFGanttCollapseControl",
+			desc:"允许折叠和拖动改变左右比例",
+			configName:"disableCollapse"
+		},
+		{
+			name:"SFGanttDragResizeControl",
+			desc:"允许右下角拖动改变甘特图大小",
+			configName:"disableDragResize"
+		},
+		{
+			name:"SFGanttHelpLinkControl",
+			desc:"显示右上角帮助链接",
+			configName:"disableHelpLink"
+		},
+		{
+			name:"SFGanttLinksMap",
+			desc:"显示甘特图之中的箭头",
+			configName:"disableLinksMap"
+		},
+		{
+			name:"SFGanttTimeScrollNotice",
+			desc:"在甘特图横向移动时显示提示",
+			configName:"disableTimeScrollNotice"
+		},
+		{
+			name:"SFGanttListScrollNotice",
+			desc:"在甘特图纵向移动时显示提示",
+			configName:"disableListScrollNotice"
+		},
+		{
+			name:"SFGanttDragZoomControl",
+			desc:"允许拖拽无级缩放",
+			configName:"disableDragZoom"
+		},
+		{
+			name:"SFGanttTimeSegmentation",
+			desc:"在图表上显示日历对准线",
+			configName:"disableTimeSegmentation"
+		},
+		{
+			name:"SFGanttWorkingMask",
+			desc:"在图表上显示工作时间阴影",
+			configName:"disableWorkingMask"
+		}
+	];
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		gtData=new SFData(new SFDataProject(doc));
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,5);		//显示甘特图
+		showControls();
+	}
+	function showControls()
+	{
+		var table=document.getElementById("Div_Controls");
+		while(table.rows[0]){table.deleteRow(0);}
+		for(var i=0;i<gtControls.length;i++)
+		{
+			var control=gtControls[i],row=table.insertRow(-1);
+			row.bgColor="#FFFFFF";
+			var cell=row.insertCell(-1);
+			var checkBox=document.createElement("input");
+			checkBox.type="checkbox";
+			cell.appendChild(checkBox);
+			checkBox.checked=true;
+			
+			cell=row.insertCell(-1);
+			cell.appendChild(document.createTextNode(control.name));
+			cell=row.insertCell(-1);
+			cell.appendChild(document.createTextNode(control.desc));
+		}
+	}
+	function showGantt()
+	{
+		if(!gtData){return;}
+		var table=document.getElementById("Div_Controls");
+		for(var i=0;i<gtControls.length;i++)
+		{
+			var flag=table.rows[i].cells[0].firstChild.checked;
+			gtConfig.setConfig("SFGantt/"+gtControls[i].configName,!flag);
+			
+		}
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,5);		//显示甘特图
+	}
+</script>
+</head>
+<body onload="onLoad()">
+<script language="javascript" src="/site/top.js" charset="utf-8"></script>
+<div id="content">
+	<div id="Div_Gantt" style="position:relative;width:70%;height:400px;border:solid 1px black;float:left;"></div>
+	<h3>范例:基本的Gantt调用</h3>
+	<table id="Div_Controls" bgcolor="#000000" border="0" cellpadding="0" cellspacing="1"></table>
+	<input type="button" onclick="showGantt()" value="显示甘特图"/>
+</div>
+<script language="javascript" src="/site/bottom.js" charset="utf-8"></script>
+</body>
+</html>

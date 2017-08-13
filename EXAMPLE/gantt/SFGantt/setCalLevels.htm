@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="utf-8"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+        gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+        gtData=new SFData(new SFDataProject(doc));	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		//更改缩放等级3的显示逻辑
+		var levels=gtMap.getCalLevels();//
+        levels[3].cals[0]=new SFGanttCalendarItem("Day",		1,	'd');
+        levels[3].cals[1]=new SFGanttCalendarItem("Month",		1,	'yyyy年M月');
+        gtMap.setCalLevels(levels);
+        gtMap.showMap(null,3);
+	}
+
+	function onBeforeTaskMove(resultobj,task,parent,ptask)
+	{
+		window.status ="parentid="+parent.getProperty("ID")+" pid="+task.getProperty("ID");
+
+	}
+
+	function test()
+	{
+		var task=gtData.getFocusTask();
+		gtData.addTask(task,null);
+	}
+</script>
+</head>
+<body onload="onLoad()">
+<input type=button value="test" onClick="test();">
+<div id="content">
+	<h3>范例:基本的Gantt调用</h3>
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:基本的Gantt调用</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>您可以通过上面显示的甘特图进行浏览,该界面的操作方式与Project软件类似，通过；左侧的纵向滚动条，您可以浏览整个项目进程，而下方左侧的滚动条用来浏览每个项目的所有列表信息，而下方右侧的滚动条用来改变甘特图的时间轴。</p>
+		<p><a href="http://www.51diaodu.cn">访问<b>我要调度网</b>查看更多关于<b>向日葵甘特</b>的信息</a></p>
+	</div>
+</div>
+</body>
+</html>

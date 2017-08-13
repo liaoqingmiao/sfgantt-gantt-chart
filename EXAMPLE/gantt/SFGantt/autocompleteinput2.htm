@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+
+<link href="default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="utf-8"></script>
+<link rel="stylesheet" href="jquery.autocomplete.css" />
+
+<script type="text/javascript" src="jquery-1.4.2.min.js""></script>
+<script type="text/javascript" src="jquery.autocomplete.js"></script>
+
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function InputHandle_Name(cell,element,list)
+	{
+		var inputData=this.inputData;//当前正在修改的字段名称
+		var field=this;//当前的SFGanttField对象
+		var value=element.getProperty(field.inputData);	//获得当前的默认值
+		var input=SFGanttField.createInput(cell,field,list);
+		input.value=value;
+		cell.appendChild(input);
+		$( input ).autocomplete(
+		[
+			"Aberdeen", "Ada", "Adamsville", "Addyston", "Adelphi", "Adena", "Adrian", "Akron",
+			"Albany", "Alexandria", "Alger", "Alledonia", "Alliance", "Alpha", "Alvada",
+			"Alvordton", "Amanda", "Amelia", "Amesville", "Amherst", "Amlin", "Amsden",
+			"Amsterdam", "Andover", "Anna", "Ansonia", "Antwerp", "Apple Creek", "Arcadia",
+			"Arcanum", "Archbold", "Arlington", "Ashland", "Ashley", "Ashtabula", "Ashville",
+			"Athens", "Attica", "Atwater", "Augusta", "Aurora", "Austinburg", "Ava", "Avon",
+			"Avon Lake", "Bainbridge", "Bakersville", "Baltic", "Baltimore", "Bannock",
+			"Barberton", "Barlow", "Barnesville", "Bartlett", "Barton", "Bascom", "Batavia",
+			"Bath", "Bay Village", "Beach City", "Beachwood", "Beallsville", "Beaver",
+			"Beaverdam", "Bedford", "Bellaire", "Bellbrook", "Belle Center", "Belle Valley",
+			"Bellefontaine", "Bellevue", "Bellville", "Belmont", "Belmore", "Beloit", "Belpre",
+			"Benton Ridge", "Bentonville", "Berea", "Bergholz", "Berkey", "Berlin",
+			"East Liberty", "East Liverpool", "East Palestine", "East Rochester",
+			"East Sparta", "East Springfield", "Eastlake", "Eaton", "Edgerton", "Edison",
+			"Edon", "Eldorado", "Elgin", "Elkton", "Ellsworth", "Elmore", "Elyria",
+			"Empire", "Englewood", "Enon", "Etna", "Euclid", "Evansport", "Fairborn",
+			"Fairfield", "Fairpoint", "Fairview", "Farmdale", "Farmer", "Farmersville",
+			"Fayette", "Fayetteville", "Feesburg", "Felicity", "Findlay", "Flat Rock",
+			"Fleming", "Fletcher", "Flushing", "Forest", "Fort Jennings", "Fort Loramie",
+			"Fort Recovery", "Fostoria", "Fowler", "Frankfort", "Franklin",
+			"Zoar"
+		],
+		{
+			delay:10,
+			minChars:1,
+			matchSubset:1, 
+			matchContains:false, 
+			autoFill:false,
+			cacheLength:10
+		}
+	).result(function(event, data, formatted){
+		element.setProperty(inputData,formatted);
+		SFEvent.deposeNode(cell,true);
+		field.showBody(cell,element,list);
+	});
+		SFEvent.addListener(input,"keydown",function(e)
+		{
+			if(e.keyCode==27)
+			{
+				input.value=element[inputData];
+			}
+			if(e.keyCode==13)
+			{
+				setTimeout(function(){
+					var value=input.value||"";
+					element.setProperty(inputData,value);
+					SFEvent.deposeNode(cell,true);
+					field.showBody(cell,element,list);
+				},16)
+			}
+		});
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		gtConfig.setConfig("SFGantt/imgPath","../../img/");	//设置图片路径
+		gtData=new SFData(new SFDataProject(doc));	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		SFGanttField.getTaskField("Name").setInputHandle(InputHandle_Name);
+		gtMap.showMap(null,2);		//显示甘特图
+	}
+</script>
+</head>
+<body onload="onLoad()">
+
+	<h3>范例:jquery autocomplete</h3>
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:基本的Gantt调用</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>本范例演示如何与jquery autocomplete进行结合
+		<p><a href="../">返回范例列表</a></p>
+	</div>
+
+
+</body>
+</html>

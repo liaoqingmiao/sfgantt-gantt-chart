@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>列多时的范例-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+
+		var adapter=new SFDataProject();
+		adapter.addTaskProperty("Text1","Text1",SFDataRender.types.String);
+		adapter.addTaskProperty("Text2","Text2",SFDataRender.types.String);
+		adapter.addTaskProperty("Text3","Text3",SFDataRender.types.String);
+		adapter.addTaskProperty("Text4","Text4",SFDataRender.types.String);
+		adapter.addTaskProperty("Text5","Text5",SFDataRender.types.String);
+		adapter.addTaskProperty("Text6","Text6",SFDataRender.types.String);
+		adapter.addTaskProperty("Text7","Text7",SFDataRender.types.String);
+		adapter.addTaskProperty("Text8","Text8",SFDataRender.types.String);
+		adapter.addTaskProperty("Text9","Text9",SFDataRender.types.String);
+		adapter.addTaskProperty("Text10","Text10",SFDataRender.types.String);
+		adapter.addTaskProperty("Text11","Text11",SFDataRender.types.String);
+		adapter.addTaskProperty("Text12","Text12",SFDataRender.types.String);
+		adapter.addTaskProperty("Text13","Text13",SFDataRender.types.String);
+		adapter.addTaskProperty("Text14","Text14",SFDataRender.types.String);
+		adapter.addTaskProperty("Text15","Text15",SFDataRender.types.String);
+		adapter.addTaskProperty("Text16","Text16",SFDataRender.types.String);
+		adapter.addTaskProperty("Text17","Text17",SFDataRender.types.String);
+		adapter.addTaskProperty("Text18","Text18",SFDataRender.types.String);
+		adapter.addTaskProperty("Text19","Text19",SFDataRender.types.String);
+		adapter.addTaskProperty("Text20","Text20",SFDataRender.types.String);
+		adapter.addTaskProperty("Text21","Text21",SFDataRender.types.String);
+		adapter.addTaskProperty("Text22","Text22",SFDataRender.types.String);
+		adapter.addTaskProperty("Text23","Text23",SFDataRender.types.String);
+		adapter.addTaskProperty("Text24","Text24",SFDataRender.types.String);
+		adapter.addTaskProperty("Text25","Text25",SFDataRender.types.String);
+		adapter.addTaskProperty("Text26","Text26",SFDataRender.types.String);
+		adapter.addTaskProperty("Text27","Text27",SFDataRender.types.String);
+		adapter.addTaskProperty("Text28","Text28",SFDataRender.types.String);
+		adapter.addTaskProperty("Text29","Text29",SFDataRender.types.String);
+		adapter.addTaskProperty("Text30","Text30",SFDataRender.types.String);
+
+		adapter.loadXml(doc);
+		gtData=new SFData(adapter);
+		
+		//以下的函数用来定义一个种任务属性
+
+
+		field=new SFGanttField(100,'文本1',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text1","Text1");
+		SFGanttField.setTaskField("Text1",field);
+
+		field=new SFGanttField(100,'文本2',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text2","Text2");
+		SFGanttField.setTaskField("Text2",field);
+
+		field=new SFGanttField(100,'文本3',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text3","Text3");
+		SFGanttField.setTaskField("Text3",field);
+
+
+		field=new SFGanttField(100,'文本4',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text4","Text4");
+		SFGanttField.setTaskField("Text4",field);
+
+		field=new SFGanttField(100,'文本5',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text5","Text5");
+		SFGanttField.setTaskField("Text5",field);
+
+		field=new SFGanttField(100,'文本6',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text6","Text6");
+		SFGanttField.setTaskField("Text6",field);
+
+
+		field=new SFGanttField(100,'文本7',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text7","Text7");
+		SFGanttField.setTaskField("Text7",field);
+
+		field=new SFGanttField(100,'文本8',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text8","Text8");
+		SFGanttField.setTaskField("Text8",field);
+
+		field=new SFGanttField(100,'文本9',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text9","Text9");
+		SFGanttField.setTaskField("Text9",field);
+
+
+		field=new SFGanttField(100,'文本10',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text10","Text10");
+		SFGanttField.setTaskField("Text10",field);
+
+
+		field=new SFGanttField(100,'文本11',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text11","Text11");
+		SFGanttField.setTaskField("Text11",field);
+
+		field=new SFGanttField(100,'文本12',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text12","Text12");
+		SFGanttField.setTaskField("Text12",field);
+
+		field=new SFGanttField(100,'文本13',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text13","Text13");
+		SFGanttField.setTaskField("Text13",field);
+
+
+		field=new SFGanttField(100,'文本14',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text14","Text14");
+		SFGanttField.setTaskField("Text14",field);
+
+		field=new SFGanttField(100,'文本15',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text15","Text15");
+		SFGanttField.setTaskField("Text15",field);
+
+		field=new SFGanttField(100,'文本16',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text16","Text16");
+		SFGanttField.setTaskField("Text16",field);
+
+
+		field=new SFGanttField(100,'文本17',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text17","Text17");
+		SFGanttField.setTaskField("Text17",field);
+
+		field=new SFGanttField(100,'文本18',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text18","Text18");
+		SFGanttField.setTaskField("Text18",field);
+
+		field=new SFGanttField(100,'文本19',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text19","Text19");
+		SFGanttField.setTaskField("Text19",field);
+
+
+		field=new SFGanttField(100,'文本20',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text20","Text20");
+		SFGanttField.setTaskField("Text20",field);
+
+
+		field=new SFGanttField(100,'文本21',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text21","Text21");
+		SFGanttField.setTaskField("Text21",field);
+
+		field=new SFGanttField(100,'文本22',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text22","Text22");
+		SFGanttField.setTaskField("Text22",field);
+
+		field=new SFGanttField(100,'文本23',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text23","Text23");
+		SFGanttField.setTaskField("Text23",field);
+
+
+		field=new SFGanttField(100,'文本24',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text24","Text24");
+		SFGanttField.setTaskField("Text24",field);
+
+		field=new SFGanttField(100,'文本25',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text25","Text25");
+		SFGanttField.setTaskField("Text25",field);
+
+		field=new SFGanttField(100,'文本26',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text26","Text26");
+		SFGanttField.setTaskField("Text26",field);
+
+
+		field=new SFGanttField(100,'文本27',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text27","Text27");
+		SFGanttField.setTaskField("Text27",field);
+
+		field=new SFGanttField(100,'文本28',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text28","Text28");
+		SFGanttField.setTaskField("Text28",field);
+
+		field=new SFGanttField(100,'文本29',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text29","Text29");
+		SFGanttField.setTaskField("Text29",field);
+
+
+		field=new SFGanttField(100,'文本30',SFGanttField.NormalHead,SFGanttField.NormalBody,SFGanttField.NormalInput,"Text30","Text30");
+		SFGanttField.setTaskField("Text30",field);
+
+
+
+		gtConfig.setConfig("SFGantt/taskFieldNames","Name,Text1,Text2,Text3,Text4,Text5,Text6,Text7,Text8,Text9,Text10,Text11,Text12,Text13,Text14,Text15,Text16,Text17,Text18,Text19,Text20,,Text21,Text22,Text23,Text24,Text25,Text26,Text27,Text28,Text29,Text30");	//设置在列表之中显示哪些列
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,4);		//显示甘特图
+	}
+</script>
+</head>
+<body onload="onLoad()">
+<script language="javascript" src="/site/top.js" charset="utf-8"></script>
+<div id="content">
+	<h3>范例:添加和自定义甘特列表之中的列</h3>
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div class="bg2">
+		<h3>范例:添加和自定义甘特列表之中的列</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>默认情况下甘特图的左侧会显示"任务名称"，"开始时间","完成时间","工期"这四列，本范例演示如何自定义列并添加到列表。</p>
+		<p>在本例之中自定义了一个“文本”的域，然后添加了一个“文本”的列，并显示到列表之中；</p>
+		<p><a href="../">返回范例列表</a></p>
+	</div>
+</div>
+<script language="javascript" src="/site/bottom.js" charset="utf-8"></script>
+</body>
+</html>

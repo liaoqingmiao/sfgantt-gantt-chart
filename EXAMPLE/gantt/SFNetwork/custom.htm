@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("../test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		SFGanttField.getTaskField("PencentComplete").setReadOnly(true);
+		gtConfig.setConfig("SFGantt/showNetwork",true);	//设置显示网络图
+		
+		//定义一种新的甘特图任务样式，名字为MyTaskStyle
+		// bgImage 的可选项为:grid_1,grid_2
+		// bgColor,milestoneImageColor,summaryImageColor,milestoneTrackImageColor 的可选项为:#000000,#0000FF,#00FF00,#00FFFF,#FF0000,#FF00FF,#FFFF00,#FFFFFF
+		//summaryImage,milestoneImage,milestoneTrackImage 的可选项为
+		//		task_head_1,task_head_2,task_head_3,task_head_3_hollow,task_head_4,task_head_5,task_head_6,task_head_7,task_head_8,task_head_9,task_head_10
+		//		task_head_11,task_head_12,task_head_13,task_head_14,task_head_15,task_head_16,task_head_17,task_head_18,task_head_19,task_head_19_hollow,task_head_20
+		//其他选项可用正常的CSS设置
+		gtConfig.setConfig("SFGantt/taskStyle/MyTaskStyle",{
+			barStyle:{border:"solid 1px #999999",bgImage:"grid_2",bgColor:"#FF00FF"},//任务条的CSS样式
+			summaryBarStyle:{backgroundColor:'#EE00EE',border:'solid 1px #000000'},//大纲横条的CSS样式
+			percentBarStyle:{backgroundColor:'yellow'},	//百分比条的显示css样式
+			trackBarStyle:{border:"solid 1px #000000",bgImage:"grid_2",bgColor:"#000000"},//跟踪甘特图显示的CSS样式
+			milestoneImage:'task_head_3',	//里程碑的显示图标，可选择项如下
+			milestoneImageColor:'#0000FF',	//里程碑的图标颜色，可选项和bgColor的选项一致
+			summaryImage:'task_head_2',	//大纲的两侧图标
+			summaryImageColor:'#FF00FF',	//大纲的两侧图标颜色，可选项和bgColor的选项一致
+			milestoneTrackImage:'task_head_3_hollow',	//里程碑的基线显示图标
+			milestoneTrackImageColor:'#FF00FF',	//里程碑的基线图标显示颜色
+			listStyle:{backgroundColor:'#111111',color:'#eeeeee'},	//左侧列表样式表
+			listSelectedStyle:{backgroundColor:'#dddddd',color:'#222222'},	//左侧列表选中时的CSS样式表
+			networkStyle:{border:"solid 2px #FF00FF",color:'#000000'},	//网络图的层样式
+			networkLineStyle:{borderBottom:'solid 1px #FF00FF'}		//网络图的每一行行样式
+		});	
+		
+		//定义一种新的甘特图链接样式，名字为MyLinkStyle1
+		// color 的可选项为:#000000,#0000FF,#00FF00,#00FFFF,#FF0000,#FF00FF,#FFFF00,#FFFFFF
+		//其他选项可用正常的CSS设置
+		gtConfig.setConfig("SFGantt/linkStyle/MyLinkStyle1",{
+			color:'#FF00FF',
+			lineStyle:{borderStyle:'solid'}
+		});	
+		
+		//定义一种新的甘特图链接样式，名字为MyLinkStyle2
+		// color 的可选项为:#000000,#0000FF,#00FF00,#00FFFF,#FF0000,#FF00FF,#FFFF00,#FFFFFF
+		//其他选项可用正常的CSS设置
+		gtConfig.setConfig("SFGantt/linkStyle/MyLinkStyle2",{
+			color:'#00FF00',
+			lineStyle:{borderStyle:'dotted'}
+		});	
+		
+		field=SFGanttField.getField('Task','Resource').headText="人员名称";//将资源字段的文字更改为 "人员名称"
+		gtConfig.setConfig("SFGanttNetworkControl/taskFields",'name,Start,Duration,Resource');	//设置网络图显示的任务字段列表
+		gtConfig.setConfig("SFGanttNetworkControl/taskStyle",'MyTaskStyle');	//使用自定义的网络图任务样式
+		gtConfig.setConfig("SFGanttNetworkControl/linkStyle",'MyLinkStyle1');	//使用自定义的网络图链接样式
+		gtConfig.setConfig("SFGanttNetworkControl/linkFocusStyle",'MyLinkStyle2');	//使用自定义的网络图链接样式
+		gtConfig.setConfig("SFGanttNetworkControl/taskFields",'name,Start,Duration,Resource');	//设置显示网络图
+		gtData=new SFData(new SFDataProject(doc),gtConfig);	//将doc对象初始化为一个甘特数据对象
+		gtData.getTaskByUid(9).setProperty("ClassName","TaskImportant");
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,5);		//显示甘特图
+		//setTimeout(function(){window.prompt('',document.documentElement.outerHTML)},1000);
+		SFEvent.addListener(gtMap,"taskfocus",onTaskFocus);
+	}
+
+	function onTaskFocus(task){
+		document.title="选中任务是："+task.getProperty("Name")
+	}
+
+	function test()
+	{
+		var task=gtMap.getFocusTask();
+		//alert(task.getProperty("Name"));
+	}
+</script>
+</head>
+<body onload="onLoad()">
+	<div id="Div_Gantt" style="position:relative;width:100%;height:800px;border:solid 1px black"></div>
+</body>
+</html>

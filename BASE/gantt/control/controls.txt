@@ -1,0 +1,26 @@
+
+
+
+
+
+
+SFGanttCalDiv			SFGanttLayoutControl,SFGanttCalendarControl
+SFGanttTimeSegmentation		SFGanttCalendarControl
+SFGanttWorkingMask		SFGanttCalendarControl
+SFGanttElementList		SFGanttChangeEventControl,SFGanttLayoutControl
+SFGanttSelectTaskOperateControl	SFGanttElementSelectControl
+SFGanttFieldList		SFGanttLayoutControl
+SFGanttViewItemsControl		SFGanttLayoutControl
+SFGanttScrollControl		SFGanttLayoutControl
+SFGanttCollapseControl		SFGanttLayoutControl
+SFGanttHelpLinkControl		SFGanttLayoutControl
+SFGanttLogoControl		SFGanttLayoutControl
+SFGanttPrintControl		SFGanttLayoutControl
+SFGanttScrollerControl		SFGanttLayoutControl
+SFGanttTasksMap			SFGanttLayoutControl
+SFGanttLinksMap			SFGanttLayoutControl
+SFGanttCalDiv			SFGanttLayoutControl
+SFGanttDragZoomControl		SFGanttLayoutControl
+SFGanttTimeSegmentation		SFGanttLayoutControl
+SFGanttWorkingMask		SFGanttLayoutControl
+SFGanttTimeLine			SFGanttLayoutControl

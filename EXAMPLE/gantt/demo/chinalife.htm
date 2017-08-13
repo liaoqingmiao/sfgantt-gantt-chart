@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="utf-8"></script>
+<script language="javascript" src="chinalife/Resources.js" charset="utf-8"></script>
+
+<script language="javascript">
+	createOptionFlag=-1;
+	function getHTML(){
+			document.getElementById("Div_TEXT").innerText=document.getElementById("Div_Gantt").innerHTML;
+		}
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("chinalife/lh_project.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+
+		//alert(doc.xml);
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		//gtConfig.setConfig("SFGantt/imgPath","../../img/");	//设置图片路径
+
+	  adapter=new SFDataProject(doc);
+		//第一步：先设置从xml中任务任务节点中扩展一个属性，在Adapter中读取这个扩展字段
+		adapter.addTaskProperty("CreateDate","CreateDate",SFDataRender.types.Time);
+		adapter.addTaskProperty("Responser","Responser",SFDataRender.types.String);
+		adapter.addTaskProperty("test","test",SFDataRender.types.String);
+		//第二步：用addTaskField函数来定义一个甘特表格列
+		//参数1  甘特列表字段名称
+		//参数2 100表示这个列的默认显示宽度
+		//参数3 '创建时间'表示这个列的名称，将可能被显示到表格头上
+		//参数4 SFGanttListField.NormalHead指定列的列表头的显示方式，这个值为默认的表示方式
+		//参数5 SFGanttListField.DateBody表示列表内容的显示方式，是针对时间对象，只显示日期的显示方式
+		//参数6 SFGanttField.DateInput表示列表输入框的显示方式
+		//参数7 "CreateDate"表示列表输入框发生更改的时候，应修改任务的哪个属性
+		//参数8 "CreateDate"表示列表的内容受任务的哪些属性影响，当这些属性中的一个发生变更的时候，将会重绘该列
+		SFGanttField.addTaskField("CreateDate",100,'创建时间',SFGanttField.NormalHead,SFGanttField.DateBody,SFGanttField.DateInput,"CreateDate","CreateDate");
+
+		//在状态列之中添加选中的红旗图标 @K_Reverter
+		SFGanttField.getTaskField("StatusIcon").addIcon(function(element,gantt)
+			{
+				if(!element.Selected){return;}
+				var img=document.createElement("img");
+				img.style.position="relative";
+				img.style.width="14px";
+				img.style.height="14px";
+				img.src="chinalife/red.png";
+				return img;
+			},"Selected");
+		//设置选中行颜色 @K_Reverter
+		gtConfig.setConfig("SFGantt/taskStyle/TaskNormal/listSelectedStyle",{backgroundColor:'#e7f6fd'});
+		//设置左侧ID列背景色 @K_Reverter
+		gtConfig.setConfig("SFGantt/idCellBgColor","#f8f8f8");
+		//甘特图的字体颜色和大小,直接的设置CSS样式即可,概要任务字体会自动加粗，无需专门设置 @K_Reverter
+		SFGlobal.setProperty(document.getElementById("Div_Gantt").style,{color:'#333333',fontFamily:'宋体',fontWeight:'normal'});
+		
+		//更改日历分隔线的显示方式，更改为根据第一级的日历(从下向上)显示，这样就显示出日历格子中的竖线 @K_Reverter
+		gtConfig.setConfig("SFGanttTimeSegmentation/calIndex",0);
+		
+		//更改默认的任务样式，包括甘特条颜色等 @K_Reverter
+		/*因为在人寿的需求里面基本不需要更改此样式，所以暂时注释了
+		//定义一种新的甘特图样式，名字为MyTaskStyle
+		// bgImage 的可选项为:grid_1,grid_2
+		// bgColor,milestoneImageColor,summaryImageColor,milestoneTrackImageColor 的可选项为:#000000,#0000FF,#00FF00,#00FFFF,#FF0000,#FF00FF,#FFFF00,#FFFFFF
+		//summaryImage,milestoneImage,milestoneTrackImage 的可选项为
+		//		task_head_1,task_head_2,task_head_3,task_head_3_hollow,task_head_4,task_head_5,task_head_6,task_head_7,task_head_8,task_head_9,task_head_10
+		//		task_head_11,task_head_12,task_head_13,task_head_14,task_head_15,task_head_16,task_head_17,task_head_18,task_head_19,task_head_19_hollow,task_head_20
+		//其他选项可用正常的CSS设置
+		gtConfig.setConfig("SFGantt/taskStyle/TaskNormal",{
+			barStyle:{border:"solid 1px #0000FF",bgImage:"grid_1",bgColor:"#0000FF"},//任务条的CSS样式
+			summaryBarStyle:{backgroundColor:'#000000',border:'solid 1px #000000'},//大纲横条的CSS样式
+			percentBarStyle:{backgroundColor:'#000000'},	//百分比条的显示css样式
+			trackBarStyle:{border:"solid 1px #000000",bgImage:"grid_1",bgColor:"#000000"},//跟踪甘特图显示的CSS样式
+			milestoneImage:'task_head_3',	//里程碑的显示图标，可选择项如下
+			milestoneImageColor:'#0000FF',	//里程碑的图标颜色，可选项和bgColor的选项一致
+			summaryImage:'task_head_2',	//大纲的两侧图标
+			summaryImageColor:'#FF00FF',	//大纲的两侧图标颜色，可选项和bgColor的选项一致
+			milestoneTrackImage:'task_head_3_hollow',	//里程碑的基线显示图标
+			milestoneTrackImageColor:'#FF00FF',	//里程碑的基线图标显示颜色
+			listStyle:{backgroundColor:'#FFFFFF'},	//左侧列表样式表
+			listSelectedStyle:{backgroundColor:'#e7f6fd'},	//左侧列表选中时的CSS样式表
+			networkStyle:{border:"solid 2px #0000FF",color:'#000000'},	//网络图的层样式
+			networkLineStyle:{borderBottom:'solid 1px #0000FF'}		//网络图的每一行行样式
+		});	*/
+
+			
+		//设置一个超级链接地址维护域HyperlinkAddress1
+		var field1=new SFGanttField({width:150,bodyData:'Responser',inputData:'Responser',headText:'负责人',headStyle:{textAlign:'left'},bodyStyle: {textAlign:'center'}})
+		SFGanttField.setTaskField("Responser",field1);		
+		SFGanttField.getTaskField("Responser").setInputHandle(InputHandle_Responser);//设置开始日期输入方式
+		
+		var field2=new SFGanttField({width:150,bodyData:'test',inputData:'test',headText:'test',headStyle:{textAlign:'left'},bodyStyle: {textAlign:'center'}})
+		SFGanttField.setTaskField("test",field2);
+		//SFGanttField.getTaskField("test").setInputHandle(InputHandle_test);
+		//第三步：设置在列表中显示哪些甘特表格列
+
+		gtConfig.setConfig("SFGantt/taskFieldNames","StatusIcon,Name,CreateDate,Responser,test");	//设置在列表之中显示哪些列
+
+		gtData=new SFData(adapter);	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,4);		//显示甘特图
+		//gtMap.collapseChart();
+		
+		//在图表之中显示元素分隔线，这样就显示出日历格子中的横线 @K_Reverter
+		gtMap.addControl(new SFGantElementSeparator());
+	}
+	
+	function InputHandle_Responser(cell,task,list)
+	{			
+		var curValue=task.getProperty("Responser")||"",strInit = new Array(),name="content";
+		strInit="<input type='text' style='width:100px' id='n"+name+"'>";
+		strInit=strInit+" <input type='hidden'  id='id"+name+"' value=''>";	
+		strInit=strInit+"<img src='darrow.gif' alt='' width='16' height='16' align='absmiddle' id='img"+name+"'>";
+    cell.innerHTML=strInit;
+    //将原值赋给列表
+    var inputobj=document.getElementById("ncontent");
+	  if(inputobj){
+				inputobj.value=curValue;
+	  }		
+	  //alert("111111")
+	  //增加全局变量，用于判断列表是否创建以及所选值的返回
+  	curTask=task; 
+      
+   var b=new SelectDIV("content",{width:"100px",img:"darrow.gif",zindex:66},"");
+   var tmpdivobj=document.getElementById("div_list");
+  var resNode,strResources,resList,resText;
+ //第一次创建
+  if(createOptionFlag==-1){
+	for(var resource=gtData.getRootResource();resource;resource=resource.getNext())
+	{
+		if(resource.Name)
+		{
+			b.addOption(resource.Name,resource.Name);
+		}
+	}
+		createOptionFlag=1;
+}	
+else{//列表已存在，则根据已有的值，判断列表项是否为选中
+		var optlist=tmpdivobj.getElementsByTagName("option");
+		var checklist=document.getElementsByName("a1content");
+	selectedList=curValue.split(",");
+	for(var p=0;p<optlist.length;p++){
+		var checkflag=-1;
+		var checkobj=checklist[p];
+		
+		for(var t=0;t<selectedList.length;t++){
+				if(optlist[p].value==selectedList[t].replace(" ","")){
+					checkflag=1;
+					break;
+				}
+			}
+			
+			if(checkflag==1){//如果列表项在已选项中，则标记为选中
+				checkobj.checked=true;
+			}
+			else{
+				checkobj.checked=false;
+			}		
+	}
+}
+}
+	
+</script>
+</head>
+<body onload="onLoad()">
+
+<div id="content">
+	
+	<h3>范例:基本的Gantt调用</h3>
+	<p>	<input type=button value="添加任务" onClick="javaScript:gtMap.addTask();">	
+	<input type=button value="删除任务" onClick="javaScript:gtMap.deleteTask();">
+	<input type=button value="升级任务" onClick="javaScript:gtMap.upgradeSelectedTasks();">	
+	<input type=button value="降级任务" onClick="javaScript:gtMap.degradeSelectedTasks();">
+	<input type=button value="建立链接" onClick="javaScript:gtMap.addTasksLinks();">
+	<input type=button value="取消链接" onClick="javaScript:gtMap.removeTasksLinks();">
+	<input type=button value="图表放大" onClick="javaScript:gtMap.zoomIn();">
+	<input type=button value="图表缩小" onClick="javaScript:gtMap.zoomOut();"></p>
+	<input type=button value="获取HTML" onClick="getHTML()">
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<div id="divcell"></div>
+	<div class="bg2">
+		<h3>范例:基本的Gantt调用</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>您可以通过上面显示的甘特图进行浏览,该界面的操作方式与Project软件类似，通过；左侧的纵向滚动条，您可以浏览整个项目进程，而下方左侧的滚动条用来浏览每个项目的所有列表信息，而下方右侧的滚动条用来改变甘特图的时间轴。</p>
+		<p>在左侧列表之中点击右键，有一个简单的右键菜单，可以快速的执行一些与该任务对应的操作，还可以打开"任务信息"的窗口进行编辑操作；</p>
+		<p>在右侧列表之中点击右键，可以放大或缩小右边的甘特图；</p>
+		<p>鼠标放在甘特图的中间分割条上，鼠标形状会变成横向拖动状态，这个时候可以拖动鼠标，调整左侧列表区和右侧图表区的大小；</p>
+		<p>鼠标放在甘特图右下角的斜三角上，鼠标形状会变成对角斜线状态，这个时候可以拖动鼠标改变整个甘特图的大小；</p>
+		<p><a href="../">返回范例列表</a></p>
+	</div>
+</div>
+
+</body>
+</html>

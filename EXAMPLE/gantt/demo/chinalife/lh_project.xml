@@ -1,0 +1,50 @@
+﻿<?xml version="1.0"?> 
+<Project xmlns="http://schemas.microsoft.com/project">
+ <Tasks>
+<Task>
+  <UID>0</UID> 
+  <ID>0</ID> 
+  <Name>M2011-0120-开发一处-核心业务处理产品线年度运维支持</Name> 
+  <CreateDate>2011-01-30T09:22:00</CreateDate> 
+  <OutlineNumber>0</OutlineNumber> 
+  <Start>2011-01-30T09:22:00</Start> 
+  <Finish>2011-03-30T09:22:00</Finish> 
+  <Summary>1</Summary> 
+  <PercentComplete>50%</PercentComplete> 
+  <ConstraintType></ConstraintType> 
+ <Responser></Responser>
+ <test></test>
+  </Task>
+<Task>
+ <UID>1</UID> 
+  <ID>1</ID> 
+  <Name>开发</Name> 
+  <CreateDate>2011-01-30T09:22:00</CreateDate> 
+  <OutlineNumber>1</OutlineNumber> 
+  <Start>2011-01-30T09:22:00</Start> 
+  <Finish>2011-03-30T09:22:00</Finish> 
+  <Summary>1</Summary> 
+  <PercentComplete>50%</PercentComplete> 
+  <ConstraintType></ConstraintType> 
+  <Responser>臧涛</Responser>
+   <test>臧涛</test>
+  </Task>
+<Task>
+  <UID>2</UID> 
+  <ID>2</ID> 
+  <Name>测试</Name> 
+  <CreateDate>2011-01-30T09:22:00</CreateDate> 
+  <OutlineNumber>1.1</OutlineNumber> 
+  <Start>2011-01-30T09:22:00</Start> 
+  <Finish>2011-03-30T09:22:00</Finish> 
+  <Summary>1</Summary> 
+  <PercentComplete>50%</PercentComplete> 
+  <ConstraintType></ConstraintType> 
+<Responser>李珊</Responser>
+<test>李珊</test>
+  </Task>
+</Tasks>  
+<Resources>
+李珊,唐培洪,鲁宏,李月,宁勇,孙玉辉,乌海霞,张敏,霍艳明,秦宁
+</Resources>
+</Project>

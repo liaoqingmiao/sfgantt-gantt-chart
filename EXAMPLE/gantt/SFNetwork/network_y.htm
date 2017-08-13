@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>基本的Gantt调用-向日葵甘特开发范例-我要调度网</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<meta name="keywords" content="SFGantt,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtData,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("../test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		SFGanttField.getTaskField("PencentComplete").setReadOnly(true);
+
+		gtConfig.setConfig("SFGantt/showNetwork",true);	//设置显示网络图
+		gtConfig.setConfig("SFGanttNetworkControl/linkStyle","RedDashed");	//设置网络图的线条样式，默认为RedNormal
+		gtConfig.setConfig("SFGanttNetworkControl/linkFocusStyle","BlueDashed");	//设置网络图被选中的线条样式，默认为BlueNormal
+		gtConfig.setConfig("SFGanttNetworkControl/taskFields","name,Start,Finish,Duration");	//设置网络图的任务显示字段，默认为name,Start,Finish,Resource
+		gtConfig.setConfig("SFGanttNetworkControl/taskNoticeFields","name,UID,Start,Finish,Duration,Resource,Notes");	//设置网络图的任务鼠标提示字段，默认为name,UID,Duration,Resource,Notes
+		gtConfig.setConfig("SFGanttNetworkControl/width",220);	//网络图每个任务的整体宽度像素值(包含周边空白区)
+		gtConfig.setConfig("SFGanttNetworkControl/height",150);	//网络图每个任务的整体高度像素值(包含周边空白区)
+		gtConfig.setConfig("SFGanttNetworkControl/nodeWidth",200);	//网络图每个任务的节点内容框宽度像素值
+		gtConfig.setConfig("SFGanttNetworkControl/nodeHeight",78);	//网络图每个任务的节点内容框高度像素值
+		gtConfig.setConfig("SFGanttNetworkControl/dir","y");	//网络图的显示方向，横向x,纵向y
+		gtConfig.setConfig("SFGanttNetworkControl/combineLine",true);	//网络图显示时是否将箭头线条合并使图看起来更简单
+		
+		gtData=new SFData(new SFDataProject(doc),gtConfig);	//将doc对象初始化为一个甘特数据对象
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,5);		//显示甘特图
+		//setTimeout(function(){window.prompt('',document.documentElement.outerHTML)},1000);
+		SFEvent.addListener(gtMap,"taskfocus",onTaskFocus);
+	}
+
+	function onTaskFocus(task){
+	//	alert(task.getProperty("Name"));
+	}
+
+	function test()
+	{
+		var task=gtMap.getFocusTask();
+		//alert(task.getProperty("Name"));
+	}
+</script>
+</head>
+<body onload="onLoad()">
+	<div id="Div_Gantt" style="position:relative;width:100%;height:800px;border:solid 1px black"></div>
+</body>
+</html>

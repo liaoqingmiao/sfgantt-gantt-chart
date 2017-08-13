@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>获得甘特图修改过后的XML文件-向日葵甘特开发范例-我要调度网</title>
+<meta name="keywords" content="SFGantt,getXml,甘特图,向日葵甘特,gantt,Ajax,project,Javascript,API"/>
+<link href="/site/default.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="../gantt.js" charset="gb2312"></script>
+<script language="javascript">
+	var gtProject,gtMap;
+	function onLoad()//在页面初始化的时候执行本函数
+	{
+		SFAjax.loadXml("../test.xml",onGanttLoaded);	//通过Ajax模式下载对应的XML文件，并在下载完成之后执行onDataLoaded函数
+	}
+	function onGanttLoaded(doc)	//doc参数是一个XML文件DOM对象
+	{
+		var gtConfig=new SFConfig();	//初始化一个页面上的配置对象
+		gtConfig.setConfig("SFGantt/container","Div_Gantt");	//设置用来显示甘特图的层的ID
+		gtConfig.setConfig("SFDataProject/saveChange",true);
+		gtProject=new SFDataProject(doc);
+		gtData=new SFData(gtProject);	//将doc对象初始化为一个甘特数据对象
+	//	gtData.addComponent(new SFDataOutlineComponent());
+		gtMap=new SFGantt(gtConfig,gtData);	//用相应的数据对象和配置对象创建甘特对象
+		gtMap.showMap(null,4);		//显示甘特图
+	}
+	function getGanttXml()
+	{
+		var xmlDom=gtProject.getXml();
+		document.getElementById("ganttXml").value=SFAjax.getXmlString(xmlDom);
+	}
+</script>
+</head>
+<body onload="onLoad()">
+<script language="javascript" src="/site/top.js" charset="utf-8"></script>
+<div id="content">
+	<h3>范例:获得甘特图修改过后的XML文件</h3>
+	<div id="Div_Gantt" style="position:relative;width:890px;height:400px;border:solid 1px black"></div>
+	<input type="button" value="获取XML" onclick="getGanttXml()"/><br/>
+	<textarea id="ganttXml" cols="100" rows="10"/></textarea>
+	<div class="bg2">
+		<h3>范例:获得甘特图修改过后的XML文件</h3>
+		<p>查看<b>本页面源文件</b>可以了解如何使用SFGantt Javascript API实现本功能；</p>
+		<p>本范例演示如何获得用户操作修改过后的XML文件内容，很多时候，需要将用户修改过后的数据发送到服务端处理，因此这个功能是很重要的。</p>
+		<p>在进行相应的修改操作之后，点击"获取XML"按钮,就可以在甘特图下方的文本框之中看到修改过的XML文件内容.</p>
+		<p><a href="../">返回范例列表</a></p>
+	</div>
+</div>
+<script language="javascript" src="/site/bottom.js" charset="utf-8"></script>
+</body>
+</html>
